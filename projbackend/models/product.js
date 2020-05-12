@@ -37,6 +37,6 @@ const productSchema = new mongoose.Schema({
         contentType :String
     }
     //TODO : add the size
-})
+},{timestamps:true})
 
 module.exports = mongoose.model("product",productSchema)

@@ -60,7 +60,7 @@ userSchema.method = {
 
     securepassword : function(plainpassword){
         if(!plainpassword) return '';
-        try {
+        try {f
             // how are we sending the salt 
             return crypto.createHmac('sha256', this.salt)
             .update(plainpassword)
