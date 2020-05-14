@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema({
      
     encrypt_password:{
         type:String,
-        required:true,
+        // required:true,
     },
     salt:String,
     role:{
@@ -39,10 +39,6 @@ var userSchema = new mongoose.Schema({
         default:[]
     }
 },{timestamps:true});
-
-
-
-
 userSchema.virtual("password")
     .set(function(password){
         this._password = password
@@ -53,7 +49,7 @@ userSchema.virtual("password")
         return this._password
     })
 
-userSchema.method = {
+userSchema.methods = {
     authenticate : function(plainpassword){
         return this.securepassword(plainpassword) === this.encrypt_password
     },
