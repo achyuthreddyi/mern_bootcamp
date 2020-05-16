@@ -23,11 +23,10 @@ var userSchema = new mongoose.Schema({
     userinfo:{
         type :String,
         trim:true
-    },
-     
+    },     
     encrypt_password:{
         type:String,
-        // required:true,
+        required:true,
     },
     salt:String,
     role:{
@@ -39,6 +38,7 @@ var userSchema = new mongoose.Schema({
         default:[]
     }
 },{timestamps:true});
+
 userSchema.virtual("password")
     .set(function(password){
         this._password = password
@@ -53,19 +53,16 @@ userSchema.methods = {
     authenticate : function(plainpassword){
         return this.securepassword(plainpassword) === this.encrypt_password
     },
-
     securepassword : function(plainpassword){
         if(!plainpassword) return '';
-        try {f
+        try {
             // how are we sending the salt 
             return crypto.createHmac('sha256', this.salt)
             .update(plainpassword)
-            .digest('hex');
-            
+            .digest('hex');            
         } catch (err ) {
             return "";            
         }
-
     }
 }
 

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {check , validationResult} = require('express-validator')
-const {signout ,signup } = require('../controllers/authentication')
+const {signout ,signup , signin ,isSignedIn} = require('../controllers/authentication')
 
 
 router.post("/signup",
@@ -14,10 +14,19 @@ router.post("/signup",
     // .isLength({ min: 5 }).withMessage('must be at least 5 chars long')
     // .matches(/\d/).withMessage('must contain a number')
     //////////////////////
-
 ],signup)
-router.post("/signout",signout)
-router.get("/",(req,res)=>{
-    res.send('coming here')
+
+
+router.post("/signin",
+[
+    check("email","give the proper email").isEmail(),
+    check("password","password field should be atleast 5 characters").isLength({min:5,max:45})
+   
+],signin)
+
+router.get("/signout",signout)
+router.get("/test",isSignedIn,(req,res)=>{
+    res.send("a protected route")
 })
+
 module.exports = router;
