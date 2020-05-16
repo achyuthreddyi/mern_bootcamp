@@ -69,8 +69,32 @@ exports.signout = (req,res)=>{
 exports.isSignedIn = expressJwt({
     secret:process.env.SECRET,
     userProperty:"auth"
-
+    // console.log();
+    
 })
 
 
 //custom middlewares
+
+exports.isAuthenticated = (req,res,next) => {
+    // test this route after creating the front end
+    let checker = req.profile && req.auth  && req.profile._id ===req.auth._id;
+    if (!checker){
+        return res.status(403).json({
+            error :"ACCESS DENIED"
+        })
+    }
+    return res.status(200).json({
+        msg : "access not denied"
+    })
+    next();
+}
+exports.isAdmin = (req,res,next) => {
+    if(req.profile.role === 0){
+        return res.status(403).json({
+            error : "you are not admin , access denied you bitch!!!"
+        })
+    }
+
+    next();
+}
