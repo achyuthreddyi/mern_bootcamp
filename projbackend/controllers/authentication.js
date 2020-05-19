@@ -6,6 +6,7 @@ require('dotenv').config()
 
 
 exports.signup = (req,res)=>{
+    // what is validation result come back here and check
     const errors = validationResult(req)
     // console.log(validationResult(req));    
     if (!errors.isEmpty()) {
@@ -60,12 +61,9 @@ exports.signout = (req,res)=>{
     res.clearCookie("token")
     res.json({
         message:"user signout successful"
-    })
-    
+    })    
 }
-
 // protected routes
-
 exports.isSignedIn = expressJwt({
     secret:process.env.SECRET,
     userProperty:"auth"
