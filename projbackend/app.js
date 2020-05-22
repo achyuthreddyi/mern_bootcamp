@@ -4,8 +4,10 @@ const express = require('express')
 const app = express()
 const bodybarser = require('body-parser')
 const cookieparser = require('cookie-parser')
-const authRoutes = require('./routes/authentication')
 const cors = require('cors')
+// my routes
+const authRoutes = require('./routes/authentication')
+const userRoutes = require('./routes/user')
 
 //DB connections
 mongoose
@@ -28,7 +30,8 @@ app.use(cors())
 
 //my routes
 app.use("/api",authRoutes)
-app.get("/",(req,res)=>{
+app.use("/api",userRoutes)
+app.get("/api/",(req,res)=>{
     res.send("hey man")
 })
 
